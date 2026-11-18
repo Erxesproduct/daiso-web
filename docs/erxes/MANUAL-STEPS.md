@@ -86,3 +86,15 @@ prepayment, only non-cash. FAQ: Pocket loans online from 100,000₮, no prepayme
 
 Website (done): checkout offers **QPay** and **Pocket** (Pocket only from 100,000₮), validated on the server; the rule
 «100% урьдчилгаа, 48 цагийн дотор төлөөгүй бол цуцлагдана» is shown in the cart and in the order message.
+
+## 1.3 eBarimt setup
+
+Zochil has no eBarimt setting for this shop.
+
+1. Collect from Daiso: TIN of «Монова Трейд» ХХК, district code (СБД), VAT status, product classification codes
+   (household goods, food, cosmetics: food and cosmetics may need their own codes).
+2. Register for **PosAPI 3.0** (ebarimt.mn → Business → PosAPI) and install the PosAPI service.
+3. **Settings → eBarimt → Add**: PosAPI URL, TIN, district code, VAT switches; assign it to the website pipeline.
+
+Website (done): checkout asks «Хувь хүн» or «Байгууллага»; a company needs a 7-digit registry number, validated on the
+server.
