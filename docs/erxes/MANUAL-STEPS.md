@@ -119,3 +119,41 @@ server.
 2. **Sales → Boards → «Онлайн захиалга» → pipeline «Вэбсайт»**, stages: Шинэ захиалга → Төлбөр хүлээгдэж буй (48 цаг)
    → Төлбөр баталгаажсан → Савлагдсан → Хүргэлтэд гарсан → Хүргэгдсэн, plus «Цуцлагдсан» (unpaid after 48 h).
 3. **Frontline → Forms → (order form) → Settings**: create a sales card in «Шинэ захиалга» for every submission.
+
+## 1.5 Test order from cart to receipt
+
+**Verified on a local production build:** `npm run test:order -- http://localhost:3141` passes 25 cases: empty cart,
+unknown product, a sold-out product, more than the stock, quantity over 20; A zone (+6,600₮), B zone (+8,800₮) and
+countryside (+13,200₮) totals; pick-up rejected; a big order; address required; QPay accepted, Pocket rejected under
+100,000₮ and accepted from 100,000₮; bank transfer and HiPay rejected; unknown delivery / payment; company registry
+rejected and accepted; phone (incl. +976), email, honeypot. Without erxes the order returns `503 not_configured` and
+the checkout shows the phone number, the reference (`DS-YYMMDD-XXXX`) and the total.
+
+Steps for a real test order:
+
+1. **Frontline → Forms → Create** «Вэбсайт захиалга» with fields Нэр, Утас, Имэйл, Захиалга. Copy the form id and
+   the field ids.
+2. In Vercel set `ERXES_API_URL`, `ERXES_ORDER_FORM_ID`, `ERXES_ORDER_FIELD_IDS`, then redeploy.
+3. Run `npm run test:order -- https://<production url> --send`. Expect **20,597₮**: 2 × the cheapest product
+   (3,999₮) + one 5,999₮ product + A zone 6,600₮.
+4. In erxes: find the submission and its card → send the QPay invoice and pay it → issue the eBarimt → move the card
+   to «Хүргэгдсэн» → void the test order.
+
+---
+
+## Open questions for Daiso
+
+1. **City zone border**: Zochil describes zone A three ways: the option («5 шар – 7 буудал – Офицеруудын ордон –
+   Нисэх»), the delivery rule («Толгойт, 32, Амгалан, Нисэх, Зайсан») and the FAQ («Орбит, Улиастай, 7 буудал,
+   Нисэх»). Which is current? The website shows the option text.
+2. **Zone B per-km surcharge** and the **countryside surcharge**: how much, and is it charged before delivery?
+3. **Pick-up** at Гурван гал худалдааны төв (СБД) or other branches: offer it online?
+4. **QPay / Pocket credentials** outside Zochil; TIN and PosAPI for eBarimt.
+5. **The 316 uncategorised products**: the name-based placement should be checked once by staff (CSV column
+   `categoryCode`).
+6. **Duplicate barcodes**: 4550480635743 (761404, 714849), 4901072203169 (760020, 760016), 4550480218502 (726583,
+   512210). erxes barcodes should be unique: merge or fix. 28 product names also repeat (e.g. «Банны хөшиг 180*180»):
+   colours as variants?
+7. **77 products without a photo**.
+8. **Security (Zochil, not this site)**: the public daiso.mn page data includes the shop's Pocket client id and
+   secret. Ask Zochil to hide it and Pocket to rotate the secret.
