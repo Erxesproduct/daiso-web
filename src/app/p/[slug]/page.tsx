@@ -5,6 +5,7 @@ import { BuyBox } from "@/components/add-button";
 import { Gallery } from "@/components/gallery";
 import { ChatIcon, TruckIcon } from "@/components/icons";
 import { PriceTag } from "@/components/price-tag";
+import { Scroller } from "@/components/scroller";
 import { NoPhoto, ProductCard } from "@/components/product-card";
 import { business } from "@/content/business";
 import { getCategory, getProduct, inStock, products, soldOut } from "@/lib/catalog";
@@ -144,11 +145,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <section className="mt-20" aria-label="Төстэй бараа">
           <p className="hand text-[16px] text-pink">Ойролцоо үнэтэй</p>
           <h2 className="heading mt-1 text-[28px] md:text-[36px]">{cat.name}-с</h2>
-          <div className="scroller mt-6">
+          <Scroller className="scroller mt-6">
             {related.map((x) => (
               <ProductCard key={x.id} p={x} />
             ))}
-          </div>
+          </Scroller>
         </section>
       )}
     </div>

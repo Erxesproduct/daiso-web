@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Gacha } from "@/components/gacha";
 import { ArrowIcon, SparkIcon, TruckIcon } from "@/components/icons";
+import { Scroller } from "@/components/scroller";
 import { ProductCard } from "@/components/product-card";
 import { Reveal } from "@/components/reveal";
 import { business } from "@/content/business";
@@ -194,11 +195,11 @@ export default function Home() {
                 Бүгдийг үзэх <ArrowIcon size={18} />
               </Link>
             </div>
-            <div className="scroller mt-6">
+            <Scroller className="scroller mt-6">
               {sanrio.slice(0, 12).map((p) => (
                 <ProductCard key={p.id} p={p} />
               ))}
-            </div>
+            </Scroller>
           </div>
         </section>
       )}
@@ -270,11 +271,11 @@ function Shelf({ title, note, href, items }: { title: string; note: string; href
           Бүгд <ArrowIcon size={18} />
         </Link>
       </div>
-      <div className="scroller mt-6">
+      <Scroller className="scroller mt-6">
         {items.map((p) => (
           <ProductCard key={p.id} p={p} />
         ))}
-      </div>
+      </Scroller>
     </section>
   );
 }

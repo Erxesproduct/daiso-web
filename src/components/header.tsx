@@ -4,6 +4,7 @@ import { business } from "@/content/business";
 import { categories, products } from "@/lib/catalog";
 import { countLabel } from "@/lib/format";
 import { CartLink } from "./cart-link";
+import { Scroller } from "./scroller";
 import { SearchIcon, SparkIcon } from "./icons";
 
 const ticker = [
@@ -54,7 +55,8 @@ export function Header() {
             <CartLink />
           </nav>
         </div>
-        <nav className="wrap flex gap-2 overflow-x-auto pb-2.5 [scrollbar-width:none]" aria-label="Ангилал">
+        <div className="wrap">
+          <Scroller as="nav" label="Ангилал" small className="flex gap-2 overflow-x-auto pb-2.5 select-none [scrollbar-width:none]">
           {categories.map((c) => (
             <Link key={c.id} href={`/shop?c=${c.id}`} className="flex shrink-0 items-center gap-1.5 rounded-full bg-blush px-3 py-1 text-[13px] font-bold text-ink transition hover:bg-pink hover:text-white">
               <span aria-hidden>{c.emoji}</span>
@@ -64,7 +66,8 @@ export function Header() {
           <Link href="/shop?tag=sanrio" className="flex shrink-0 items-center gap-1.5 rounded-full bg-sun px-3 py-1 text-[13px] font-bold text-ink transition hover:bg-pink hover:text-white">
             <span aria-hidden>🎀</span>Sanrio
           </Link>
-        </nav>
+          </Scroller>
+        </div>
       </div>
     </header>
   );
