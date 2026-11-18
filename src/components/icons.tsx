@@ -51,6 +51,12 @@ export const ChatIcon = (p: P) => (
     <path d="m8 13 2.5-2.5 2.5 2 3-3" />
   </Svg>
 );
+export const MailIcon = (p: P) => (
+  <Svg {...p}>
+    <rect x="3" y="5.5" width="18" height="13" rx="3" />
+    <path d="m4 7.5 8 6 8-6" />
+  </Svg>
+);
 export const TruckIcon = (p: P) => (
   <Svg {...p}>
     <path d="M3 6h11v10H3zM14 10h4l3 3v3h-7" />

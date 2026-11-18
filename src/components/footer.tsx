@@ -3,12 +3,12 @@ import Link from "next/link";
 import { business } from "@/content/business";
 import { categories } from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
-import { FacebookIcon, InstagramIcon, PhoneIcon, PinIcon, YoutubeIcon } from "./icons";
+import { FacebookIcon, InstagramIcon, MailIcon, PhoneIcon, PinIcon, TruckIcon, YoutubeIcon } from "./icons";
 
 export function Footer() {
   return (
     <footer className="mt-24 border-t-2 border-ink bg-pink text-white">
-      <div className="wrap grid gap-10 py-14 md:grid-cols-[1.3fr_1fr_1fr]">
+      <div className="wrap grid gap-10 py-14 md:grid-cols-[1.2fr_0.8fr_1.3fr] lg:gap-14">
         <div>
           <Image src="/brand/logo-white.png" alt="DAISO Japan" width={160} height={52} className="h-12 w-auto" />
           <p className="hand mt-5 text-[20px] leading-snug">
@@ -45,35 +45,61 @@ export function Footer() {
         </div>
         <div>
           <p className="text-[13px] font-black tracking-widest text-sun uppercase">Холбоо барих</p>
-          <ul className="mt-4 grid gap-3 text-[14.5px] font-bold">
-            <li>
-              <a href={`tel:${business.phone.tel}`} className="inline-flex items-center gap-2 hover:text-sun">
-                <PhoneIcon size={17} /> {business.phone.display}
-              </a>
-              <span className="text-white/70"> · </span>
-              <a href={`tel:${business.phone2.tel}`} className="hover:text-sun">
-                {business.phone2.display}
-              </a>
+          <ul className="mt-4 grid gap-3 text-ink">
+            <li className="rounded-2xl border-2 border-ink bg-white p-3.5 shadow-[3px_3px_0_var(--ink)]">
+              <span className="flex items-center gap-3">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-ink bg-mint">
+                  <PhoneIcon size={18} />
+                </span>
+                <span className="text-[12px] font-black tracking-widest text-mute uppercase">Утас</span>
+              </span>
+              <span className="mt-2.5 flex flex-wrap gap-2">
+                {[business.phone, business.phone2].map((ph) => (
+                  <a key={ph.tel} href={`tel:${ph.tel}`} className="rounded-full border-2 border-ink bg-paper px-3.5 py-1 text-[16px] font-black tracking-wide transition hover:-translate-y-0.5 hover:bg-sun">
+                    {ph.display}
+                  </a>
+                ))}
+              </span>
             </li>
             <li>
-              <a href={`mailto:${business.email}`} className="hover:text-sun">
-                {business.email}
+              <a href={`mailto:${business.email}`} className="group flex items-center gap-3 rounded-2xl border-2 border-ink bg-white p-3.5 shadow-[3px_3px_0_var(--ink)] transition hover:-translate-y-0.5">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-ink bg-sky">
+                  <MailIcon size={18} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[12px] font-black tracking-widest text-mute uppercase">Имэйл</span>
+                  <span className="block truncate text-[15.5px] font-black group-hover:text-pink">{business.email}</span>
+                </span>
               </a>
             </li>
-            <li className="flex gap-2">
-              <PinIcon size={17} className="mt-1 shrink-0" /> {business.address}
+            <li>
+              <a href={business.map} target="_blank" rel="noreferrer" className="group flex items-center gap-3 rounded-2xl border-2 border-ink bg-white p-3.5 shadow-[3px_3px_0_var(--ink)] transition hover:-translate-y-0.5">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-ink bg-sun">
+                  <PinIcon size={18} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[12px] font-black tracking-widest text-mute uppercase">Дэлгүүр</span>
+                  <span className="block text-[15px] leading-snug font-black group-hover:text-pink">{business.address}</span>
+                  <span className="hand text-[13px] text-pink">Газрын зураг дээр харах →</span>
+                </span>
+              </a>
             </li>
           </ul>
-          <ul className="mt-6 grid gap-1 text-[13.5px] text-white/85">
-            {business.delivery.map((d) => (
-              <li key={d.id}>
-                {d.name}: <b>{formatPrice(d.fee)}</b>
-              </li>
-            ))}
-          </ul>
-          <Link href="/info" className="mt-5 inline-block text-[14px] font-extrabold underline decoration-sun decoration-2 underline-offset-4">
-            Хүргэлт, төлбөр, түгээмэл асуулт
-          </Link>
+          <div className="mt-5 rounded-2xl border-2 border-dashed border-white/50 p-3.5">
+            <p className="flex items-center gap-2 text-[12px] font-black tracking-widest text-sun uppercase">
+              <TruckIcon size={16} /> Хүргэлт
+            </p>
+            <ul className="mt-2 flex flex-wrap gap-1.5">
+              {business.delivery.map((d) => (
+                <li key={d.id} className="rounded-full bg-white/15 px-3 py-1 text-[13px]">
+                  {d.name.replace("Хот дотор · ", "")} <b className="text-sun">{formatPrice(d.fee)}</b>
+                </li>
+              ))}
+            </ul>
+            <Link href="/info" className="mt-3 inline-block text-[13.5px] font-extrabold underline decoration-sun decoration-2 underline-offset-4 hover:text-sun">
+              Хүргэлт, төлбөр, түгээмэл асуулт →
+            </Link>
+          </div>
         </div>
       </div>
       <div className="border-t-2 border-ink/30">

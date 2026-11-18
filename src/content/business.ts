@@ -17,6 +17,8 @@ export const business = {
   phone2: { display: "9402-8548", tel: "+97694028548" },
   email: "sales@daiso.mn",
   address: "СБД, Гурван гал худалдааны төв",
+  /** Map search for the store address. */
+  map: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Гурван гал худалдааны төв, Улаанбаатар"),
   facebook: "https://www.facebook.com/daisomn.shop",
   messenger: "https://m.me/daisomn.shop",
   instagram: "https://www.instagram.com/daiso_mongolia/",
