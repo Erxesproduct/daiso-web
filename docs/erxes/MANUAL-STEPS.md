@@ -98,3 +98,24 @@ Zochil has no eBarimt setting for this shop.
 
 Website (done): checkout asks «Хувь хүн» or «Байгууллага»; a company needs a 7-digit registry number, validated on the
 server.
+
+## 1.4 Delivery zones, fees and order statuses
+
+**Website (done)**, from the Zochil delivery options of shop 2366:
+
+| Option | Fee | Note |
+| --- | --- | --- |
+| Хот дотор · А бүс | 6,600₮ | 5 шар – 7 буудал – Офицеруудын ордон – Нисэх |
+| Хот дотор · Б бүс | 8,800₮ | Beyond zone A; may increase per km |
+| Орон нутаг | 13,200₮ | Монгол шуудан: sent within 3 working days, arrives in 7–10 days; may increase by region |
+
+- Delivery 24–48 h after payment. Pick-up is not enabled on Zochil, so it is not offered. The fee is added on the
+  server; the browser cannot change it. Rules are in `src/content/business.ts`.
+
+**erxes (manual):**
+
+1. Import `docs/erxes/daiso-delivery.csv`: services `DELIVERY-A` (6,600₮), `DELIVERY-B` (8,800₮),
+   `DELIVERY-COUNTRYSIDE` (13,200₮).
+2. **Sales → Boards → «Онлайн захиалга» → pipeline «Вэбсайт»**, stages: Шинэ захиалга → Төлбөр хүлээгдэж буй (48 цаг)
+   → Төлбөр баталгаажсан → Савлагдсан → Хүргэлтэд гарсан → Хүргэгдсэн, plus «Цуцлагдсан» (unpaid after 48 h).
+3. **Frontline → Forms → (order form) → Settings**: create a sales card in «Шинэ захиалга» for every submission.
