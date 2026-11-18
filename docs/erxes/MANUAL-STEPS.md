@@ -70,3 +70,19 @@ Changes on the website (facts unchanged):
 - No product is on sale on Zochil (`sale_price` empty everywhere), so no discounts are shown.
 - Prices are fixed price points (502 products at 5,999₮). The site colours each price point like a shelf sticker and
   lets customers shop by it.
+
+## 1.2 Payment setup (QPay)
+
+Zochil: QPay (`qpay2`, merchant `Z_DAISO`), Pocket and HiPay methods; online checkout disabled. Payment rule: 100%
+prepayment, only non-cash. FAQ: Pocket loans online from 100,000₮, no prepayment, no fee.
+
+1. Get Daiso's own QPay merchant credentials: `client_id`, `client_secret`, `invoice_code` (ask Zochil / QPay whether
+   the existing `Z_DAISO` merchant can be used outside Zochil). Owner: Terbish / Daiso.
+2. **Settings → Payments → Add → QPay**: enter them. **Settings → Payments → (QPay) → Test**: a 100₮ invoice.
+3. **Settings → Payments → Add → Pocket**: Daiso's Pocket merchant / terminal credentials (from Pocket, not from
+   Zochil). Test with a 100,000₮ invoice.
+4. **Sales → Pipelines → «Вэбсайт» → Settings → Payments**: select QPay and Pocket.
+5. HiPay has no erxes payment kind: it stays off the website.
+
+Website (done): checkout offers **QPay** and **Pocket** (Pocket only from 100,000₮), validated on the server; the rule
+«100% урьдчилгаа, 48 цагийн дотор төлөөгүй бол цуцлагдана» is shown in the cart and in the order message.
