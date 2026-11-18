@@ -1,0 +1,351 @@
+@import "tailwindcss";
+
+/*
+ * «Pop aisle»: Daiso magenta on milky pink paper with a dot grid, ink outlines with offset shadows (stickers you can
+ * press), and one candy colour per price point, like the coloured price stickers on a store shelf.
+ */
+@theme {
+  --color-pink: #e6007e;
+  --color-pink-deep: #b3005f;
+  --color-blush: #ffe1f0;
+  --color-blush-2: #ffc9e3;
+  --color-paper: #fff8fb;
+  --color-ink: #2a1630;
+  --color-ink-2: #5c4762;
+  --color-mute: #8b7690;
+  --color-line: #efd3e2;
+  --color-mint: #5ee0b5;
+  --color-sun: #ffd84a;
+  --color-sky: #82cbff;
+  --color-tangerine: #ff9b55;
+  --color-grape: #8f6bff;
+
+  --font-sans: var(--nf-rounded), "M PLUS Rounded 1c", system-ui, sans-serif;
+  --font-hand: var(--nf-hand), "Balsamiq Sans", "Comic Sans MS", cursive;
+}
+
+:root {
+  --pink: #e6007e;
+  --ink: #2a1630;
+  --mint: #5ee0b5;
+  --sun: #ffd84a;
+  --sky: #82cbff;
+  --tangerine: #ff9b55;
+  --grape: #8f6bff;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background-color: var(--color-paper);
+    background-image: radial-gradient(color-mix(in srgb, var(--pink) 14%, transparent) 1.2px, transparent 1.3px);
+    background-size: 22px 22px;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  ::selection {
+    background: var(--pink);
+    color: #fff;
+  }
+  /* grid children may shrink below their content, so a long word never pushes a column past the screen */
+  .grid > * {
+    min-width: 0;
+  }
+  :focus-visible {
+    outline: 3px solid var(--pink);
+    outline-offset: 2px;
+  }
+}
+
+/* Site classes sit in the components layer: Tailwind utilities on the same element still win. */
+@layer components {
+  .wrap {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1240px;
+    padding-inline: 16px;
+  }
+  @media (min-width: 768px) {
+    .wrap {
+      padding-inline: 28px;
+    }
+  }
+  .hand {
+    font-family: var(--font-hand);
+  }
+  .heading {
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+  /* an outlined sticker with an offset shadow */
+  .card {
+    background: #fff;
+    border: 2px solid var(--color-ink);
+    border-radius: 22px;
+    box-shadow: 4px 4px 0 var(--color-ink);
+  }
+  .card-soft {
+    background: #fff;
+    border: 2px solid var(--color-line);
+    border-radius: 22px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1.4rem;
+    border: 2px solid var(--color-ink);
+    border-radius: 999px;
+    font-weight: 800;
+    box-shadow: 3px 3px 0 var(--color-ink);
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.12s ease,
+      background-color 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--color-ink);
+  }
+  .btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--color-ink);
+  }
+  .btn:disabled {
+    transform: none;
+    box-shadow: 3px 3px 0 var(--color-ink);
+  }
+  .btn-pink {
+    background: var(--pink);
+    color: #fff;
+  }
+  .btn-pink:hover {
+    background: var(--color-pink-deep);
+  }
+  .btn-white {
+    background: #fff;
+    color: var(--color-ink);
+  }
+  .btn-sun {
+    background: var(--sun);
+    color: var(--color-ink);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 38px;
+    padding: 0 0.95rem;
+    border: 2px solid var(--color-ink);
+    border-radius: 999px;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s,
+      transform 0.12s;
+  }
+  .chip:hover {
+    transform: translateY(-1px);
+  }
+  .chip[aria-current="true"],
+  .chip[aria-pressed="true"] {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  /* price sticker: a luggage-tag shape with a punched hole */
+  .tag {
+    --bg: var(--mint);
+    --fg: var(--color-ink);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.75rem 0.18rem 1.45rem;
+    background: var(--bg);
+    color: var(--fg);
+    border: 2px solid var(--color-ink);
+    border-radius: 6px 12px 12px 6px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    clip-path: polygon(14px 0, 100% 0, 100% 100%, 14px 100%, 0 50%);
+    border-left: 0;
+  }
+  .tag::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    margin-top: -3.5px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 2px var(--color-ink);
+  }
+  .tag-edge {
+    filter: drop-shadow(2px 2px 0 var(--color-ink));
+  }
+
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 38s linear infinite;
+  }
+  .marquee:hover {
+    animation-play-state: paused;
+  }
+
+  .wobble:hover {
+    animation: wobble 0.5s ease;
+  }
+  .float {
+    animation: float 5s ease-in-out infinite;
+  }
+  .scroller {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(170px, 210px);
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding: 4px 4px 14px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--pink) transparent;
+  }
+  .scroller > * {
+    scroll-snap-align: start;
+  }
+  .prose-daiso p,
+  .prose-daiso li {
+    margin-top: 0.7em;
+    color: var(--color-ink-2);
+    line-height: 1.75;
+  }
+  .prose-daiso h3 {
+    margin-top: 1.4em;
+    font-weight: 800;
+  }
+  .prose-daiso li {
+    padding-left: 1.3em;
+    position: relative;
+  }
+  .prose-daiso li::before {
+    content: "";
+    position: absolute;
+    left: 0.2em;
+    top: 0.72em;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--pink);
+  }
+
+  .reveal-armed {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  .reveal-armed.reveal-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.55s ease var(--d, 0ms),
+      transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms);
+  }
+  .pop-in {
+    animation: pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  60% {
+    transform: rotate(3deg);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--r, 0deg));
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes drop {
+  0% {
+    transform: translateY(-140px) rotate(-200deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(8px) rotate(10deg);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-6px) rotate(-4deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-5px) rotate(-1deg);
+  }
+  40%,
+  80% {
+    transform: translateX(5px) rotate(1deg);
+  }
+}
+@keyframes spin-knob {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
